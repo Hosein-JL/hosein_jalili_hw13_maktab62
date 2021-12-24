@@ -1,4 +1,4 @@
-const { promiseAccess, promiseReadFile } = require("./promiseFs");
+const { promiseAccess, promiseReadFile, promiseWrite } = require("./promiseFs");
 
 Promise.all([promiseAccess("numbers.txt"), promiseAccess("names.txt")])
   .then(function () {
@@ -8,9 +8,13 @@ Promise.all([promiseAccess("numbers.txt"), promiseAccess("names.txt")])
     ]);
   })
   .then(parsed)
+  .then((data) => promiseWrite("result.txt", data))
   .catch((err) => console.log(err));
 
 function parsed([numbers, names]) {
+  // console.log(numbers);
+  // console.log(names);
+
   let person = {};
   let personData = names.split("\r\n");
   for (const element of personData) {
@@ -27,13 +31,10 @@ function parsed([numbers, names]) {
       numbersObject[key] = [value];
     }
   }
-  formatter(person, numbersObject);
-}
 
-function formatter(person, numbers) {
   let para = "";
   for (let key in person) {
-    switch (numbers[key]?.lenght) {
+    switch (numbers[key]?.length) {
       case undefined:
         para += `${person[key]} hasn’t any phone number.\n`;
         break;
@@ -48,4 +49,5 @@ function formatter(person, numbers) {
     }
   }
   console.log(para);
+  return para;
 }

@@ -1,20 +1,20 @@
 const fs = require("fs");
 const path = require("path");
 
-function promiseAccess(fileName) {
+function promiseAccess(filename) {
   return new Promise(function (resolve, reject) {
-    fs.access(path.join(__dirname, fileName), function (err) {
-      if (err) reject("Not found!");
+    fs.access(path.join(__dirname, filename), function (err) {
+      if (err) reject("not found");
       else resolve("ok");
     });
   });
 }
 
-function promiseReadFile(fileName) {
+function promiseReadFile(filename) {
   return new Promise(function (resolve, reject) {
-    fs.readFile(path.join(__dirname, fileName), "utf-8", function (err, data) {
+    fs.readFile(path.join(__dirname, filename), "utf-8", function (err, data) {
       if (err) {
-        reject("Can't read file");
+        reject(err);
       } else {
         resolve(data);
       }
@@ -22,9 +22,9 @@ function promiseReadFile(fileName) {
   });
 }
 
-function promiseWrite(fileName, data) {
+function promiseWrite(filename, data) {
   return new Promise(function (resolve, reject) {
-    fs.writeFile(path.join(__dirname, fileName), data, "utf-8", (err) => {
+    fs.writeFile(path.join(__dirname, filename), data, "utf-8", (err) => {
       if (err) reject(err);
       else resolve("ok");
     });
