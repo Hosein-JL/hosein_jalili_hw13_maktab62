@@ -12,8 +12,8 @@ Promise.all([promiseAccess("numbers.txt"), promiseAccess("names.txt")])
   .catch((err) => console.log(err));
 
 function parsed([numbers, names]) {
-  // console.log(numbers);
-  // console.log(names);
+  console.log(numbers);
+  console.log(names);
 
   let person = {};
   let personData = names.split("\r\n");
@@ -34,15 +34,16 @@ function parsed([numbers, names]) {
 
   let para = "";
   for (let key in person) {
-    switch (numbers[key]?.length) {
+    // console.log(nuumbers[key]);
+    switch (numbersObject[key]?.length) {
       case undefined:
         para += `${person[key]} hasn’t any phone number.\n`;
         break;
       case 1:
-        para += `${person[key]}’s phone number is ${numbers[key][0]}.\n`;
+        para += `${person[key]}’s phone number is ${numbersObject[key][0]}.\n`;
         break;
       default:
-        para += `${person[key]}’s phone numbers are ${numbers[key].join(
+        para += `${person[key]}’s phone numbers are ${numbersObject[key].join(
           ", "
         )}.\n`;
         break;

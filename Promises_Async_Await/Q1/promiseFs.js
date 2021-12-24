@@ -26,7 +26,7 @@ function promiseWrite(fileName, data) {
   return new Promise(function (resolve, reject) {
     fs.writeFile(path.join(__dirname, fileName), data, "utf-8", (err) => {
       if (err) reject(err);
-      else resolve("ok");
+      else resolve(data);
     });
   });
 }
