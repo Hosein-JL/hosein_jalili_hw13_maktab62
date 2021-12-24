@@ -39,16 +39,18 @@ function parsed(names, numbers) {
 
 async function promise() {
   try {
-    await Promise.all([promiseAccess("names.txt"), promiseAccess("names.txt")]);
-    const [names, numbers] = await Promise.all([
-      promiseReadFile("names.txt"),
-      promiseReadFile("numbers.txt"),
-    ]);
+    if ((await promiseAccess("names.txt")) && promiseAccess("names.txt")) {
+      // await Promise.all([promiseAccess("names.txt"), promiseAccess("names.txt")]);
+      const [names, numbers] = await Promise.all([
+        promiseReadFile("names.txt"),
+        promiseReadFile("numbers.txt"),
+      ]);
 
-    const result = parsed(names, numbers);
-    await promiseWrite("result.txt", result);
+      const result = parsed(names, numbers);
+      await promiseWrite("result.txt", result);
 
-    console.log(result);
+      console.log(result);
+    }
   } catch (err) {
     console.log(err);
   }
